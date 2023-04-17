@@ -2,7 +2,6 @@ import cv2
 import numpy
 from skimage.color import rgb2gray
 
-
 # 读取文件
 img = cv2.imread('img/lenna.png')
 # 获取图像矩阵的行和列 通道数本次作业不用 截取掉 图像为三通道图
@@ -18,7 +17,7 @@ img_gray_3 = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 for i in range(h):
     for j in range(w):
         # 解构 三通道图
-        b,g,r = img[i][j]
+        b, g, r = img[i][j]
         # 灰度化
         img_gray[i][j] = int(0.3 * r + 0.59 * g + 0.11 * b)
 
@@ -42,4 +41,6 @@ print(img_gray_2, '<----img_gray_2')
 print(img_gray_3, '<----img_gray_3')
 print(img_binaryzation, '<----img_binaryzation')
 print(img_binaryzation_1, '<-----img_binaryzation_1')
-# cv2.imshow('测试 渲染灰度图', img_gray)
+cv2.imshow('测试 渲染灰度图', img_gray)
+# cv2.imshow('img_binary', img_binaryzation)
+cv2.waitKey()
