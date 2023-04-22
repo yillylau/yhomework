@@ -8,7 +8,7 @@ def nearestInterpolation(img, h=800, w=800):
 
      sh, sw, channel = img.shape
      res = np.zeros((h, w, channel), np.uint8)
-     scaleY, scaleX = sh / h, sw / w
+     scaleY, scaleX =  float(sh) / h,  float(sw) / w
      for i in range(h):
          for j in range(w):
             #寻找(i,j) 对应在原图像中 最近的点
@@ -16,20 +16,19 @@ def nearestInterpolation(img, h=800, w=800):
             except : print("放大的长度或宽度等于或超过原来的二倍")
      return res
 
-
 #机器码加速
 @jit(nopython=True)
-def biliInterpolation(img, h=1500, w = 1500):
+def biliInterpolation(img, h=1024, w = 1024):
 
     sh, sw, channel = img.shape
     res = np.zeros((h, w, channel), np.uint8)
-    scaleY, scaleX = sh/ h, sw/w
+    scaleY, scaleX = float(sh) / h, float(sw) / w
     for i in range(channel):
         for dy in range(h):
             for dx in range(w):
 
                 #寻找 (dx, dy) 对应在原图像的 点 (x,y)
-                sx, sy = 1.0 * dx * scaleX - 0.5, 1.0 * dy * scaleY - 0.5
+                sx, sy = (dx + 0.5) * scaleX - 0.5,  (dy + 0.5) * scaleY - 0.5
                 #找出四个点
                 sx0, sy0 = int(np.floor(sx)), int(np.floor(sy))
                 sx1, sy1 = min(sx0 + 1, sw - 1), min(sy0 + 1, sh - 1)
@@ -37,7 +36,7 @@ def biliInterpolation(img, h=1500, w = 1500):
                 # (x0, y0) 和 (x1, y0) 的单线性插值
                 r1 = (sx1 - sx) * img[sy0, sx0, i] + (sx - sx0) * img[sy0, sx1, i]
                 # (x0, y1) 和 (x1, y1) 的单线性插值
-                r2 = (sx1 - sx) * img[sy0, sx1, i] + (sx - sx0) * img[sy1, sx1, i]
+                r2 = (sx1 - sx) * img[sy1, sx0, i] + (sx - sx0) * img[sy1, sx1, i]
                 res[dy, dx, i] = int((sy1 - sy) * r1 + (sy - sy0) * r2)
 
     return res
