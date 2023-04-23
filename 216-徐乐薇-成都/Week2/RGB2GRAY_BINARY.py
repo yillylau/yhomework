@@ -14,7 +14,7 @@ for i in range(h):
         m = image[i, j]  # 高和宽的BGR坐标
         image_gray[i, j] = int(m[0] * 0.11 + m[1] * 0.59 + m[2] * 0.3)  # BGR->灰度化计算公式，m[0]为B，m[1]为G，m[2]为R，cv2是BGR读取顺序，赋给新图像
 
-cv2.imshow("图像灰度", image_gray)
+cv2.imshow("image gray", image_gray)
 print("图像灰度: %s" % image_gray)
 print(image_gray)
 
