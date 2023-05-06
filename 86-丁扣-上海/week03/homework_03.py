@@ -63,6 +63,8 @@ class Week03:
         通道顺序：BGR
         """
         src_h, src_w, channels = source_img.shape
+        if src_h == target_h and src_w == target_w:
+            return source_img.copy()
         dst_img = np.zeros((target_h, target_w, channels), dtype=np.uint8)
         scale_y = src_h / target_h
         scale_x = src_w / target_w
