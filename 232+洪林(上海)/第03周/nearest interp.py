@@ -29,6 +29,7 @@ img = cv2.imread("lenna.png")
 zoom = function(img)
 
 print(zoom)
+print("------------------------------------")
 print(zoom.shape)
 
 cv2.imshow("old img", zoom)
