@@ -4,6 +4,7 @@
 # @Author   : honglin
 # @Time     : 2023/5/11 21:23
 
+#作业1.实现最临近插值
 import cv2;
 import numpy as np;
 
