@@ -32,8 +32,8 @@ def bilinear_interpolation(img, out_dim):
         for dst_y in range(dst_h):
             for dst_x in range(dst_w):
                 # 中心点对齐
-                src_x = (dst_w + 0.5) * scale_x - 0.5
-                src_y = (dst_h + 0.5) * scale_y - 0.5
+                src_x = (dst_x + 0.5) * scale_x - 0.5
+                src_y = (dst_y + 0.5) * scale_y - 0.5
 
                 # 找出 虚拟点 周围的4个关键坐标
                 src_x0 = int(np.floor(src_x))
