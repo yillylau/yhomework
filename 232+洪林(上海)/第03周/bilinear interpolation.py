@@ -9,6 +9,11 @@
 import cv2
 import numpy as np
 
+'''
+python implementation of bilinear interpolation
+双线性插值的python实现
+'''
+
 
 def bilinear_interpolation(img, out_dim):
     print(img.shape)
@@ -34,7 +39,7 @@ def bilinear_interpolation(img, out_dim):
                 src_x0 = int(np.floor(src_x))
                 src_x1 = min(src_x0 + 1, src_w - 1)
                 src_y0 = int(np.floor(src_y))
-                src_y1 = min(src_y0 + 1, src_y - 1)
+                src_y1 = min(src_y0 + 1, src_h - 1)
 
                 # 套用公式，计算插值
                 temp0 = (src_x1 - src_x) * img[src_y0, src_x0, i] + (src_x - src_x0) * img[src_y0, src_x1, i]
