@@ -53,5 +53,5 @@ def bilinear_interpolation(img, out_dim):
 if __name__ == "__main__":
     img = cv2.imread("lenna.png")
     dst = bilinear_interpolation(img, (800, 800))
-    cv2.imshow("双线性插值", dst)
+    cv2.imshow("my bilinear interpolation", dst)
     cv2.waitKey()
