@@ -1,25 +1,25 @@
 ##Python实现PCA
 import numpy as np
 def pca(X,k):
-  #mean of each feature
+  #计算每个特征向量的均值
   n_samples, n_features = X.shape
   mean=np.array([np.mean(X[:,i]) for i in range(n_features)])
 
-  #normalization
+  #归一化(标准化)
   norm_X=X-mean
-  #scatter matrix
+  #样本矩阵的协方差矩阵
   scatter_matrix=np.dot(np.transpose(norm_X),norm_X)
 
-  #Calculate the eigenvectors and eigenvalues
+  #协方差矩阵的特征值和特征向量
   eig_val, eig_vec = np.linalg.eig(scatter_matrix)
   eig_pairs = [(np.abs(eig_val[i]), eig_vec[:,i]) for i in range(n_features)]
-  # sort eig_vec based on eig_val from highest to lowest
+  #构建转换矩阵
   eig_pairs.sort(reverse=True)
 
-  # select the top k eig_vec
+  # select the top k 特征向量
   feature=np.array([ele[1] for ele in eig_pairs[:k]])
 
-  #get new data
+  #get result
   data = np.dot(norm_X,np.transpose(feature))
   return data
 
