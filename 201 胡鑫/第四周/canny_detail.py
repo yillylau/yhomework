@@ -124,9 +124,10 @@ if __name__ == "__main__":
         temp1, temp2 = zhan.pop()
         for i in range(temp1-1, temp1+2):
             for j in range(temp2-1, temp2+2):
-                if lowerboundary < img_yizhi[i, j] < highboundary:
-                    img_yizhi[i, j] = 255
-                    zhan.append([i, j])
+                if i != temp1 and j != temp2:
+                    if lowerboundary < img_yizhi[i, j] < highboundary:
+                        img_yizhi[i, j] = 255
+                        zhan.append([i, j])
     # 将非边缘点置为0
     for i in range(h):
         for j in range(w):

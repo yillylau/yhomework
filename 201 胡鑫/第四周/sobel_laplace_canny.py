@@ -35,4 +35,5 @@ plt.subplot(232), plt.imshow(img_sobel_x, "gray"), plt.title("Sobel_x")
 plt.subplot(233), plt.imshow(img_sobel_y, "gray"), plt.title("Sobel_y")  
 plt.subplot(234), plt.imshow(img_laplace,  "gray"), plt.title("Laplace")  
 plt.subplot(235), plt.imshow(img_canny, "gray"), plt.title("Canny")  
-plt.show()  
+plt.show() 
+

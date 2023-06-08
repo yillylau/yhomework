@@ -55,5 +55,5 @@ if __name__ == '__main__':
     dst_img = bilinear_interpolation(img, 600, 600)
     cv2.imshow('lenna', img)
     cv2.imshow('dst-lenna', dst_img)
-    cv2.waitKey()
-
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
