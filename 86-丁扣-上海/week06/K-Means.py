@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 retval, bestLabels, centers = kmeans(data, K, bestLabels, criteria, attempts, flags[, centers])
     data表示聚类数据，最好是np.flloat32类型的N维点集
     K表示聚类类簇数
-    bestLabels表示输出的整数数组，用于存储每个样本的聚类标签索引
+    bestLabels表示输出的整数数组，用于存储每个样本的聚类标签索引,各个数据点的最终分类标签（索引）
     criteria表示迭代停止的模式选择，这是一个含有三个元素的元组型数。格式为（type, max_iter, epsilon）
         其中，type有如下模式：
          —–cv2.TERM_CRITERIA_EPS :精确度（误差）满足epsilon停止。
@@ -54,7 +54,8 @@ class CV2KMeans(object):
         print("data: \n")
         print(self.data)
         print("compactness: \n")
-        print("labels: \n")
+        print(compactness)
+        print("labels: \n")  # 各个数据点的最终分类标签（索引）
         print(labels)
         print("centers: \n")
         print(centers)
@@ -71,7 +72,6 @@ class CV2KMeans(object):
             plt.title(titles[i])
             plt.xticks([]), plt.yticks([])
         plt.show()
-
 
 
 if __name__ == '__main__':
