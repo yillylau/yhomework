@@ -50,15 +50,7 @@ class CV2KMeans(object):
         return compactness, labels, centers
 
     def ret_result(self):
-        compactness, labels, centers = self.k_means()
-        print("data: \n")
-        print(self.data)
-        print("compactness: \n")
-        print(compactness)
-        print("labels: \n")  # 各个数据点的最终分类标签（索引）
-        print(labels)
-        print("centers: \n")
-        print(centers)
+        compactness, labels, centers = self.k_means()  # labels： 各个数据点的最终分类标签（索引）
         # 生成最终图像
         dst = labels.reshape((self.img_gray.shape[0], self.img_gray.shape[1]))
         # 用来正常显示中文标签
