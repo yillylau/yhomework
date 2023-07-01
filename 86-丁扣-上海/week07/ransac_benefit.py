@@ -173,6 +173,7 @@ def test():
         pylab.plot(A_col0_sorted[:, 0],
                    np.dot(A_col0_sorted, perfect_fit)[:, 0], 'limegreen',
                    label='exact system')
+
         pylab.plot(A_col0_sorted[:, 0],
                    np.dot(A_col0_sorted, linear_fit)[:, 0], 'gold',
                    label='linear fit')
