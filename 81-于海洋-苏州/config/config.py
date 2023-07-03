@@ -12,3 +12,5 @@ class Config:
     RES_PATH = Path(Path(__file__).parent.parent, "res")
 
     LENNA = str(Path(RES_PATH, "lenna.png"))
+    LENNA_BLUR = str(Path(RES_PATH, "lenna_blur.jpg"))
+    CHECKER_BOARD = str(Path(RES_PATH, "checkerboard.jpg"))
