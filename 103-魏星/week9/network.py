@@ -124,12 +124,12 @@ def main():
     img1 = cv2.imread("./dataset/yuce.png",0)
     img1_input = img1.reshape(inputnodes)
     img1_out = network.test(img1_input)
-    print("img1(运动鞋)被推断为：", label_desc[np.argmax(img1_out)])
+    print("img1(短靴)被推断为：", label_desc[np.argmax(img1_out)])
 
     img2 = cv2.imread("./dataset/yuce2.png", 0)
     img2_input = img2.reshape(inputnodes)
     img2_out = network.test(img2_input)
-    print("img2(衬衫)被推断为：", label_desc[np.argmax(img2_out)])
+    print("img2(套头毛衣)被推断为：", label_desc[np.argmax(img2_out)])
 
 
 if __name__=='__main__':
