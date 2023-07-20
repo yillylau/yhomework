@@ -18,14 +18,14 @@
 import torch
 import torch.nn as nn
 from torchvision import datasets, transforms
-import cv2
-import numpy as np
 
 
 # 准备数据集
 def minist_loadData():
     train_dataset = datasets.MNIST(root='./data', train=True, download=True, transform=transforms.ToTensor())
     test_dataset = datasets.MNIST(root='./data', train=False, download=True, transform=transforms.ToTensor())
+    print("训练数据集数量：", len(train_dataset))
+    print("测试数据集数量：", len(test_dataset))
     train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
     test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=64, shuffle=True)
     return train_loader, test_loader
@@ -54,7 +54,7 @@ class NetWork(nn.Module):
         x = x.view(-1, 320)
         x = nn.functional.relu(self.fc1(x))
         x = self.fc2(x)
-        return nn.functional.softmax(x, dim=1)
+        return nn.functional.log_softmax(x, dim=1)  #log_softmax下降效果显著，但是速度很慢；softmax下降效果不理想
 
 class Model():
     def __init__(self, network):
@@ -63,9 +63,10 @@ class Model():
         self.criterion = nn.CrossEntropyLoss()
         self.optimizer = torch.optim.SGD(self.network.parameters(), lr=0.01)
 
-    def train(self, train_loader):
+    def train(self, epoch, train_loader):
+        print("start training")
         # 训练模型
-        for epoch in range(5):
+        for epoch in range(epoch):
             running_loss = 0.0
             for i, (inputs, labels) in enumerate(train_loader):
                 self.optimizer.zero_grad()
@@ -76,7 +77,9 @@ class Model():
                 running_loss += loss.item()
             print('train;[Epoch %d] Loss: %.4f' % (epoch + 1, running_loss / len(train_loader)))
 
+        print("train end")
     def eval(self, test_loader):
+        print("start test")
         # 测试模型
         correct = 0
         total = 0
@@ -89,9 +92,11 @@ class Model():
             print("predict;测试集总个数 %d, 预测正确的个数 %d, 准确率 %.4f" % (total, correct, correct / total))
 
             # 保存参数
-            if correct > 0.97:
+            if correct/total > 0.97:
+                print("model to be saved")
                 torch.save(self.network.state_dict(), "./model/torch-mnist.h5")
 
+        print("test end")
 def main():
     # 加载数据集
     train_loader, test_loader = minist_loadData()
@@ -100,11 +105,10 @@ def main():
     # 模型
     model = Model(network)
     # 训练
-    model.train(train_loader)
+    epoch = 10
+    model.train(epoch, train_loader)
     # 测试
     model.eval(test_loader)
-
-
 
 if __name__=='__main__':
     main()

@@ -4,6 +4,8 @@
 # @FileName : model_test
 # @Project : cv
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 import tensorflow as tf
 import cv2
@@ -47,6 +49,6 @@ def test_torch_model():
     print("torch mnist end")
 
 if __name__=='__main__':
-    # test_keras_model()
-    # test_torch_model()
+    test_keras_model()
+    test_torch_model()
     pass
