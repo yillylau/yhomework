@@ -21,6 +21,7 @@ DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # 判断�
 num_workers = 0 # 给Dataloader设置worker数量
 EPOCH = 3  # 训练数据集的轮次
 best_acc = 0.87 #最低准确率，超过这个值则保存模型
+Model_File_Url = "./torch-ResNet.h5"  #模型保存路径
 
 def saveTrainDataTags(train_dataset):
     labels_list = train_dataset.class_to_idx  # class_to_idx就是获取train_dataset下每个文件夹的名称，并按字典返回
@@ -112,7 +113,7 @@ class Model():
             # 保存参数
             if correct/total > best_acc:
                 print("model to be saved")
-                torch.save(self.network.state_dict(), "./torch-AlexNet.h5")
+                torch.save(self.network.state_dict(), Model_File_Url)
 
         print("test end")
 
