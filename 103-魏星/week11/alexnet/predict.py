@@ -14,11 +14,12 @@ from AlexNet import AlexNet
 
 labels_cn = ['飞机', '汽车', '鸟', '猫', '鹿', '狗', '青蛙', '马', '船', '卡车']
 labels = ['airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
+Model_File_Url = "./torch-ResNet.h5"  #模型保存路径
 
 if __name__ == "__main__":
     print("torch mnist begin")
     model = AlexNet(num_classes=10)
-    model.load_state_dict(torch.load("./torch-AlexNet.h5"))
+    model.load_state_dict(torch.load(Model_File_Url))
 
     img1 = cv2.imread("./Test.jpg")
     img1 = cv2.resize(img1, (224,224))

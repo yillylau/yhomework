@@ -20,7 +20,8 @@ BATCH_SIZE = 64
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')  # 判断是部署在GPU上还是在CPU上
 num_workers = 0 # 给Dataloader设置worker数量
 EPOCH = 3  # 训练数据集的轮次
-best_acc = 0.97 #最低准确率，超过这个值则保存模型
+best_acc = 0.87 #最低准确率，超过这个值则保存模型
+Model_File_Url = "./torch-ResNet.h5"  #模型保存路径
 
 def saveTrainDataTags(train_dataset):
     labels_list = train_dataset.class_to_idx  # class_to_idx就是获取train_dataset下每个文件夹的名称，并按字典返回
@@ -42,7 +43,7 @@ def load_data():
         "test": transforms.Compose([transforms.Resize((224, 224)),
                                     transforms.ToTensor(),
                                     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])}
-
+    # 先执行down&saveCifar10.py 将图片分类为 train-标签-图片，test-标签-图片
     image_path="D:\\ProgramData\\project-data\cv\\11-lesson11\\cifar_10_data"
 
     # 创建数据集（打包数据集）
@@ -75,7 +76,7 @@ class Model():
         self.network = network
         # 定义损失函数、优化器
         self.loss_function = nn.CrossEntropyLoss()
-        self.optimizer = torch.optim.SGD(self.network.parameters(), lr=0.01)
+        self.optimizer = torch.optim.SGD(self.network.parameters(), lr=0.045)
 
     def do_train(self, epochs, train_loader):
         print("start training")
@@ -86,6 +87,7 @@ class Model():
             for i, (inputs, labels) in enumerate(train_bar):
                 self.optimizer.zero_grad()
                 outputs = self.network(inputs.to(DEVICE))
+                print(outputs.shape, labels.shape)
                 loss = self.loss_function(outputs, labels.to(DEVICE))
                 loss.backward()
                 self.optimizer.step()
@@ -111,7 +113,7 @@ class Model():
             # 保存参数
             if correct/total > best_acc:
                 print("model to be saved")
-                torch.save(self.network.state_dict(), "./torch-AlexNet.h5")
+                torch.save(self.network.state_dict(), Model_File_Url)
 
         print("test end")
 
@@ -125,7 +127,7 @@ def main():
     # 模型
     model = Model(network)
     # 训练
-    epoch = 10
+    epoch = 8
     model.do_train(epoch, train_loader)
     # 测试
     model.do_eval(test_loader)
