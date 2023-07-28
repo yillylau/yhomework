@@ -13,6 +13,7 @@ import numpy as np
 import torch
 from pytorch_mnist import NetWork
 
+tf.compat.v1.disable_eager_execution()
 
 def test_keras_model():
     print("keras mnist begin")
@@ -49,6 +50,9 @@ def test_torch_model():
     print("torch mnist end")
 
 if __name__=='__main__':
-    test_keras_model()
-    test_torch_model()
+    # test_keras_model()
+    # test_torch_model()
+    arr = [7]
+    one_hots = np.eye(10)[arr]
+    print(one_hots)
     pass
