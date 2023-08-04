@@ -30,7 +30,7 @@ def ConvBnRelu(input_channel, output_channel, kernel_size, stride=1, padding=0):
     )
 
 
-def ConvBnReluTruPle(input_channel, output_channel, kernel_sizes=(3, 3), strides=(1, 1), paddings=(0, 0)):
+def ConvBnReluTuple(input_channel, output_channel, kernel_sizes=(3, 3), strides=(1, 1), paddings=(0, 0)):
     return nn.Sequential(
         nn.Conv2d(input_channel, output_channel, kernel_size=kernel_sizes, stride=strides, padding=paddings),
         nn.BatchNorm2d(output_channel),
@@ -167,21 +167,21 @@ class Block2_ModuleB(nn.Module):
 
         self.branch2_7x7_a = nn.Sequential(
             ConvBnRelu(input_channel, middle_channel, kernel_size=1),  # input[N,17,17,768] out[N,17,17,middle_channel]
-            ConvBnReluTruPle(middle_channel, middle_channel, kernel_sizes=(1, 7), paddings=(0, 3)),
+            ConvBnReluTuple(middle_channel, middle_channel, kernel_sizes=(1, 7), paddings=(0, 3)),
             # input[N,17,17,middle_channel] out[N,17,17,middle_channel]
-            ConvBnReluTruPle(middle_channel, 192, kernel_sizes=(7, 1), paddings=(3, 0))
+            ConvBnReluTuple(middle_channel, 192, kernel_sizes=(7, 1), paddings=(3, 0))
             # input[N,17,17,middle_channel] out[N,17,17,192]
         )
 
         self.branch3_7x7_b = nn.Sequential(
             ConvBnRelu(input_channel, middle_channel, kernel_size=1),  # input[N,17,17,768] out[N,17,17,middle_channel]
-            ConvBnReluTruPle(middle_channel, middle_channel, kernel_sizes=(7, 1), paddings=(3, 0)),
+            ConvBnReluTuple(middle_channel, middle_channel, kernel_sizes=(7, 1), paddings=(3, 0)),
             # input[N,17,17,middle_channel] out[N,17,17,middle_channel]
-            ConvBnReluTruPle(middle_channel, middle_channel, kernel_sizes=(1, 7), paddings=(0, 3)),
+            ConvBnReluTuple(middle_channel, middle_channel, kernel_sizes=(1, 7), paddings=(0, 3)),
             # input[N,17,17,middle_channel] out[N,17,17,middle_channel]
-            ConvBnReluTruPle(middle_channel, middle_channel, kernel_sizes=(7, 1), paddings=(3, 0)),
+            ConvBnReluTuple(middle_channel, middle_channel, kernel_sizes=(7, 1), paddings=(3, 0)),
             # input[N,17,17,middle_channel] out[N,17,17,middle_channel]
-            ConvBnReluTruPle(middle_channel, 192, kernel_sizes=(1, 7), paddings=(0, 3))
+            ConvBnReluTuple(middle_channel, 192, kernel_sizes=(1, 7), paddings=(0, 3))
             # input[N,17,17,middle_channel] out[N,17,17,192]
         )
 
@@ -220,9 +220,9 @@ class Block3_ModuleA(nn.Module):
 
         self.branch2_7x7_a = nn.Sequential(
             ConvBnRelu(input_channel, 192, kernel_size=1),  # input[N,17,17,768] out[N,17,17,192]
-            ConvBnReluTruPle(192, 192, kernel_sizes=(1, 7), paddings=(0, 3)),
+            ConvBnReluTuple(192, 192, kernel_sizes=(1, 7), paddings=(0, 3)),
             # input[N,17,17,192] out[N,17,17,192]
-            ConvBnReluTruPle(192, 192, kernel_sizes=(7, 1), paddings=(3, 0)),
+            ConvBnReluTuple(192, 192, kernel_sizes=(7, 1), paddings=(3, 0)),
             # input[N,17,17,192] out[N,17,17,192]
             ConvBnRelu(192, 192, kernel_size=3, stride=2)  # input[N,17,17,192] out[N,17,17,192]
         )
@@ -265,24 +265,24 @@ class Block3_ModuleB(nn.Module):
 
         self.branch2_a_1x3 = nn.Sequential(
             ConvBnRelu(input_channel, 384, kernel_size=1),  # input[N,8,8,input_channel]  out [N,8,8,384]
-            ConvBnReluTruPle(384, 384, kernel_sizes=(1, 3), paddings=(0, 1))  # input[N,8,8,384]  out [N,8,8,384]
+            ConvBnReluTuple(384, 384, kernel_sizes=(1, 3), paddings=(0, 1))  # input[N,8,8,384]  out [N,8,8,384]
         )
 
         self.branch2_b_3x1 = nn.Sequential(
             ConvBnRelu(input_channel, 384, kernel_size=1),  # input[N,8,8,input_channel]  out [N,8,8,384]
-            ConvBnReluTruPle(384, 384, kernel_sizes=(3, 1), paddings=(1, 0))  # input[N,8,8,384]  out [N,8,8,384]
+            ConvBnReluTuple(384, 384, kernel_sizes=(3, 1), paddings=(1, 0))  # input[N,8,8,384]  out [N,8,8,384]
         )
 
         self.branch3_a_1x3 = nn.Sequential(
             ConvBnRelu(input_channel, 448, kernel_size=1),  # input[N,8,8,input_channel]  out [N,8,8,448]
             ConvBnRelu(448, 384, kernel_size=3, padding=1),  # input[N,8,8,448]  out [N,8,8,384]
-            ConvBnReluTruPle(384, 384, kernel_sizes=(1, 3), paddings=(0, 1))  # input[N,8,8,384]  out [N,8,8,384]
+            ConvBnReluTuple(384, 384, kernel_sizes=(1, 3), paddings=(0, 1))  # input[N,8,8,384]  out [N,8,8,384]
         )
 
         self.branch3_b_3x1 = nn.Sequential(
             ConvBnRelu(input_channel, 448, kernel_size=1),  # input[N,8,8,input_channel]  out [N,8,8,448]
             ConvBnRelu(448, 384, kernel_size=3, padding=1),  # input[N,8,8,448]  out [N,8,8,384]
-            ConvBnReluTruPle(384, 384, kernel_sizes=(3, 1), paddings=(1, 0))  # input[N,8,8,384]  out [N,8,8,384]
+            ConvBnReluTuple(384, 384, kernel_sizes=(3, 1), paddings=(1, 0))  # input[N,8,8,384]  out [N,8,8,384]
         )
 
         self.branch4 = nn.Sequential(
