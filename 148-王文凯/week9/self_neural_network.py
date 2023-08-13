@@ -46,7 +46,6 @@ class self_neural_network:
                 # print('final_inputs_shape', final_inputs.shape)
                 final_outputs = self.sigmoid(x=final_inputs)
                 # print('final_outputs_shape', final_outputs.shape)
-
                 output_errors = label - final_outputs
                 # print('output_errors_shape', output_errors.shape)
                 hidden_errors = np.dot(self.who, output_errors.T * final_outputs.T * (1 - final_outputs.T))
@@ -70,7 +69,7 @@ class self_neural_network:
         # print('final_input:', final_input)
         final_output = self.sigmoid(x=final_input)
         # print('final_output:', final_output)
-        return final_output
+        return self.softmax(final_output)
 
 def main():
     # 数据预处理
