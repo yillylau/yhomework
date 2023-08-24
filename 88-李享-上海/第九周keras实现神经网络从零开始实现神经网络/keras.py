@@ -3,7 +3,7 @@ from tensorflow.keras.datasets import mnist
 from tensorflow.keras import models
 from tensorflow.keras import layers
 from tensorflow.keras.utils import to_categorical
-
+import tensorflow as tf
 
 # 读取训练数据、测试数据 训练数据为28*28的图片
 (x_train, y_train), (x_test, y_test) = mnist.load_data("mnist.npz")
@@ -46,6 +46,8 @@ test_loss, test_acc = network.evaluate(test_images, test_labels, verbose=1)
 
 result = network.predict(test_images)
 print(result.shape)
+writer = tf.summary.FileWriter('logs', tf.get_default_graph())
+writer.close()
 # for i in range(result.shape[0]):
 for j in range(result.shape[1]):
     if result[1][j] == 1:
